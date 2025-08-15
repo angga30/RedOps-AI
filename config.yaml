@@ -1,0 +1,61 @@
+# RedOps-AI Configuration File
+
+# Application Settings
+app:
+  name: "RedOps-AI"
+  version: "0.1.0"
+  debug: false
+  log_level: "INFO"
+
+# Agent Configuration
+agents:
+  coordinator:
+    max_retries: 3
+    timeout: 300
+  reconnaissance:
+    nmap_timeout: 600
+    max_ports: 1000
+    default_scan_type: "syn"
+  exploitation:
+    enabled: false  # Will be implemented in future versions
+    timeout: 1800
+  reporting:
+    enabled: false  # Will be implemented in future versions
+    format: "json"
+
+# Tool Integrations
+tools:
+  nmap:
+    path: "/usr/bin/nmap"  # Auto-detected if not specified
+    default_args: ["-sS", "-O", "-sV"]
+    timing_template: "T4"
+  metasploit:
+    enabled: false  # Future implementation
+    path: "/opt/metasploit-framework/msfconsole"
+
+# LangChain/LangGraph Configuration
+llm:
+  provider: "openai"  # openai, anthropic, or local
+  model: "gpt-4"
+  temperature: 0.1
+  max_tokens: 2000
+  api_key_env: "OPENAI_API_KEY"
+
+# Output Configuration
+output:
+  directory: "./results"
+  format: "json"
+  include_raw: true
+  timestamp: true
+
+# Security Settings
+security:
+  rate_limit: 10  # requests per second
+  max_concurrent_scans: 5
+  allowed_networks:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+  blocked_networks:
+    - "127.0.0.0/8"
+    - "169.254.0.0/16"
